@@ -1433,9 +1433,19 @@ async function listenerAsync(
       Allow: "POST",
       Connection: "close",
     });
-    httpResponse.end("405 Method Not Allowed" + httpRequest.url);
+    httpResponse.end("405 Method Not Allowed" + httpRequest.url.toString);
     return;
   }
+
+  if (httpRequest.method == "GET" && httpRequest.url == "http://127.0.0.1:7547/healthcheck/") {
+    httpResponse.writeHead(200, {
+      Allow: "GET",
+      Connection: "close",
+    });
+    httpResponse.end("200 Health Check Okay");
+    return;
+  }
+
 
   let sessionId;
   // Separation by comma is important as some devices don't comform to standard
