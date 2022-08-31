@@ -1433,7 +1433,7 @@ async function listenerAsync(
       Allow: "POST",
       Connection: "close",
     });
-    httpResponse.end("405 Method Not Allowed" + httpRequest.url.toString);
+    httpResponse.end("405 Method Is Not Allowed" + httpRequest.url.toString);
     return;
   }
 
