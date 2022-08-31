@@ -1419,12 +1419,21 @@ async function listenerAsync(
 ): Promise<void> {
   stats.totalRequests += 1;
 
+  if (httpRequest.method == "GET" && httpRequest.url == "http://127.0.0.1:7547/healthcheck/") {
+    httpResponse.writeHead(200, {
+      Allow: "GET",
+      Connection: "close",
+    });
+    httpResponse.end("200 Health Check Okay");
+    return;
+  }
+
   if (httpRequest.method !== "POST") {
     httpResponse.writeHead(405, {
       Allow: "POST",
       Connection: "close",
     });
-    httpResponse.end("405 Method Not Allowed");
+    httpResponse.end("405 Method Not Allowed" + httpRequest.url);
     return;
   }
 
